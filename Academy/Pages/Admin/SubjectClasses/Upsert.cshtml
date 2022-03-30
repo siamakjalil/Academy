@@ -52,13 +52,13 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-12 mb-3">
                                 <label asp-for="SubjectClass.TimePerClass">زمان ثابت هر کلاس : </label>
-                                <input min="0" asp-for="SubjectClass.TimePerClass" class="form-control" autocomplete="off"
+                                <input type="time" asp-for="SubjectClass.TimePerClass" class="form-control" autocomplete="off"
                                        placeholder="زمان ثابت هر کلاس" />
                                 <span asp-validation-for="SubjectClass.TimePerClass" class="text-danger"></span>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12 mb-3">
                                 <label asp-for="SubjectClass.TimePerWeek">چند ساعت در هفته : </label>
-                                <input min="0" asp-for="SubjectClass.TimePerWeek" class="form-control" autocomplete="off"
+                                <input type="time"  asp-for="SubjectClass.TimePerWeek" class="form-control" autocomplete="off"
                                        placeholder="چند ساعت در هفته" />
                                 <span asp-validation-for="SubjectClass.TimePerWeek" class="text-danger"></span>
                             </div>

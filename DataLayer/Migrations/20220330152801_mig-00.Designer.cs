@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(AcademyDbContext))]
-    [Migration("20220323095631_mig-start")]
-    partial class migstart
+    [Migration("20220330152801_mig-00")]
+    partial class mig00
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,6 +107,69 @@ namespace DataLayer.Migrations
                     b.ToTable("ErrorLogs");
                 });
 
+            modelBuilder.Entity("DataLayer.Models.Plan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("NumberOfClass")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RestTime")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Plan");
+                });
+
+            modelBuilder.Entity("DataLayer.Models.PlanDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("DayId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("PlanId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("SubjectClassId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("SubjectClassId");
+
+                    b.ToTable("PlanDetail");
+                });
+
             modelBuilder.Entity("DataLayer.Models.PreSubject", b =>
                 {
                     b.Property<int>("Id")
@@ -179,11 +242,14 @@ namespace DataLayer.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TimePerClass")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TimePerWeek")
-                        .HasColumnType("int");
+                    b.Property<TimeSpan>("TimePerClass")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("TimePerWeek")
+                        .HasColumnType("time");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -195,6 +261,8 @@ namespace DataLayer.Migrations
                     b.HasIndex("StudentGroupId");
 
                     b.HasIndex("SubjectId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("SubjectClasses");
                 });
@@ -245,6 +313,25 @@ namespace DataLayer.Migrations
                     b.ToTable("TeacherSubjects");
                 });
 
+            modelBuilder.Entity("DataLayer.Models.PlanDetail", b =>
+                {
+                    b.HasOne("DataLayer.Models.Plan", "Plan")
+                        .WithMany("PlanDetails")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataLayer.Models.SubjectClass", "SubjectClass")
+                        .WithMany("PlanDetails")
+                        .HasForeignKey("SubjectClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Plan");
+
+                    b.Navigation("SubjectClass");
+                });
+
             modelBuilder.Entity("DataLayer.Models.SubjectClass", b =>
                 {
                     b.HasOne("DataLayer.Models.StudentGroup", "StudentGroup")
@@ -259,9 +346,17 @@ namespace DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DataLayer.Models.Teacher", "Teacher")
+                        .WithMany("SubjectClasses")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("StudentGroup");
 
                     b.Navigation("Subject");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("DataLayer.Models.TeacherSubject", b =>
@@ -283,6 +378,11 @@ namespace DataLayer.Migrations
                     b.Navigation("Teacher");
                 });
 
+            modelBuilder.Entity("DataLayer.Models.Plan", b =>
+                {
+                    b.Navigation("PlanDetails");
+                });
+
             modelBuilder.Entity("DataLayer.Models.StudentGroup", b =>
                 {
                     b.Navigation("SubjectClasses");
@@ -295,8 +395,15 @@ namespace DataLayer.Migrations
                     b.Navigation("TeacherSubjects");
                 });
 
+            modelBuilder.Entity("DataLayer.Models.SubjectClass", b =>
+                {
+                    b.Navigation("PlanDetails");
+                });
+
             modelBuilder.Entity("DataLayer.Models.Teacher", b =>
                 {
+                    b.Navigation("SubjectClasses");
+
                     b.Navigation("TeacherSubjects");
                 });
 #pragma warning restore 612, 618

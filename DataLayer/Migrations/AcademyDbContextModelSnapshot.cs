@@ -243,11 +243,11 @@ namespace DataLayer.Migrations
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TimePerClass")
-                        .HasColumnType("int");
+                    b.Property<TimeSpan>("TimePerClass")
+                        .HasColumnType("time");
 
-                    b.Property<int>("TimePerWeek")
-                        .HasColumnType("int");
+                    b.Property<TimeSpan>("TimePerWeek")
+                        .HasColumnType("time");
 
                     b.Property<string>("Title")
                         .IsRequired()

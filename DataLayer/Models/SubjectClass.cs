@@ -28,12 +28,14 @@ namespace DataLayer.Models
         [Display(Name = "تاریخ")]
         public DateTime DateTime { get; set; }
         [Display(Name = "زمان ثابت هر کلاس")]
-        public int TimePerClass { get; set; }
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
+        public TimeSpan TimePerClass { get; set; }
         [Display(Name = "چند ساعت در هفته")]
-        public int TimePerWeek { get; set; } 
-        public int PerWeekCount()
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm}", ApplyFormatInEditMode = true)]
+        public TimeSpan TimePerWeek { get; set; } 
+        public double PerWeekCount()
         {
-            return TimePerWeek / (TimePerClass == 0 ? 1 : TimePerClass);
+            return TimePerWeek / TimePerClass;
         }
         public SubjectClass()
         {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataLayer.Migrations
 {
-    public partial class migstart : Migration
+    public partial class mig00 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,6 +54,24 @@ namespace DataLayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ErrorLogs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Plan",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    EndTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    NumberOfClass = table.Column<int>(type: "int", nullable: false),
+                    RestTime = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Plan", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,10 +136,11 @@ namespace DataLayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StudentGroupId = table.Column<int>(type: "int", nullable: false),
                     SubjectId = table.Column<int>(type: "int", nullable: false),
+                    TeacherId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TimePerClass = table.Column<int>(type: "int", nullable: false),
-                    TimePerWeek = table.Column<int>(type: "int", nullable: false)
+                    TimePerClass = table.Column<TimeSpan>(type: "time", nullable: false),
+                    TimePerWeek = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -136,6 +155,12 @@ namespace DataLayer.Migrations
                         name: "FK_SubjectClasses_Subjects_SubjectId",
                         column: x => x.SubjectId,
                         principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SubjectClasses_Teachers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "Teachers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -166,6 +191,45 @@ namespace DataLayer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PlanDetail",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PlanId = table.Column<int>(type: "int", nullable: false),
+                    SubjectClassId = table.Column<int>(type: "int", nullable: false),
+                    DayId = table.Column<int>(type: "int", nullable: false),
+                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    EndTime = table.Column<TimeSpan>(type: "time", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlanDetail", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlanDetail_Plan_PlanId",
+                        column: x => x.PlanId,
+                        principalTable: "Plan",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlanDetail_SubjectClasses_SubjectClassId",
+                        column: x => x.SubjectClassId,
+                        principalTable: "SubjectClasses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlanDetail_PlanId",
+                table: "PlanDetail",
+                column: "PlanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlanDetail_SubjectClassId",
+                table: "PlanDetail",
+                column: "SubjectClassId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_SubjectClasses_StudentGroupId",
                 table: "SubjectClasses",
@@ -175,6 +239,11 @@ namespace DataLayer.Migrations
                 name: "IX_SubjectClasses_SubjectId",
                 table: "SubjectClasses",
                 column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubjectClasses_TeacherId",
+                table: "SubjectClasses",
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeacherSubjects_SubjectId",
@@ -199,13 +268,19 @@ namespace DataLayer.Migrations
                 name: "ErrorLogs");
 
             migrationBuilder.DropTable(
+                name: "PlanDetail");
+
+            migrationBuilder.DropTable(
                 name: "PreSubjects");
 
             migrationBuilder.DropTable(
-                name: "SubjectClasses");
+                name: "TeacherSubjects");
 
             migrationBuilder.DropTable(
-                name: "TeacherSubjects");
+                name: "Plan");
+
+            migrationBuilder.DropTable(
+                name: "SubjectClasses");
 
             migrationBuilder.DropTable(
                 name: "StudentGroups");

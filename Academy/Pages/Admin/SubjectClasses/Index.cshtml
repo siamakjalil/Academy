@@ -1,0 +1,88 @@
+﻿@page
+@using Academy.Classes
+@using Helper
+
+@model Academy.Pages.Admin.SubjectClasses.IndexModel
+@{
+    ViewData["Title"] = "مدیریت کلاس ها";
+    Layout = "/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-12 col-lg-12 col-12 mt-3">
+        <div class="card shadow">
+            <div class="card-header">
+                <h5 class="d-inline">لیست کلاس ها</h5>
+            </div>
+            <div class="col-4 mt-3 me-3">
+                <a class="btn btn-outline-success" asp-page="/Admin/SubjectClasses/Upsert"><i class="fa fa-plus"></i> ثبت کلاس</a>
+            </div>
+            <div class="card-body">
+                <div class="table table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.SubjectClasses[0].StudentGroupId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.SubjectClasses[0].SubjectId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.SubjectClasses[0].TeacherId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.SubjectClasses[0].Title)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.SubjectClasses[0].TimePerClass)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.SubjectClasses[0].TimePerWeek)
+                                </th>
+                                <th>
+                                    تعداد کلاس در هفته
+                                </th>
+                                <th>
+                                    عملیات
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.SubjectClasses)
+                            {
+                                <tr>
+                                    <td>@item.StudentGroup.Title</td>
+                                    <td>@item.Subject.Title</td>
+                                    <td>@item.Teacher.FullName</td>
+                                    <td>@item.Title</td>
+                                    <td>@item.TimePerClass</td>
+                                    <td>@item.TimePerWeek</td>
+                                    <td>@item.PerWeekCount()</td>
+                                    <td>
+                                        <a class="btn btn-outline-warning btn-sm" asp-page="/Admin/SubjectClasses/Upsert" asp-route-id="@item.Id">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a class="btn btn-outline-danger btn-sm" asp-route-id="@item.Id" asp-page-handler="Delete">
+                                            <i class="fa fa-remove"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-12 mt-3 text-center">
+                    <div page-model="@Model.PagingInfo"
+                         page-action="/Admin/SubjectClasses"
+                         page-class="btn border"
+                         page-class-selected="btn btn-primary active"
+                         page-class-normal="btn btn-light"
+                         class="btn-group">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

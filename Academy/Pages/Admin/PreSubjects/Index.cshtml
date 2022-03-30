@@ -1,0 +1,86 @@
+﻿@page
+@using Academy.Classes
+
+@model Academy.Pages.Admin.PreSubjects.IndexModel
+@{
+    ViewData["Title"] = "مدیریت پیش نیاز ها";
+    Layout = "/Pages/Shared/_AdminLayout.cshtml";
+}
+@section BreadCrumb{
+    <li class="breadcrumb-item"><a href="/Admin/Subjects">لیست درس ها </a></li>
+    <li class="breadcrumb-item active" aria-current="page">مدیریت پیش نیاز ها</li>
+    }
+<div class="row justify-content-md-center">
+    @if (ViewData["PreId"] != null)
+    {
+        <div class="col-md-12 col-lg-12 col-12">
+            <div class="card shadow">
+                <h5 class="card-header">افزودن پیش نیاز</h5>
+                <div class="card-body">
+                    <section class="card-text">
+                        <form id="account" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="PreSubject.SubjectId" />
+                            <div class="row mb-3">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <select asp-for="PreSubject.PreId" class="form-control form-select" asp-items="ViewBag.PreId">
+                                        <option selected disabled>انتخاب درس</option>
+                                    </select>
+                                    <span asp-validation-for="PreSubject.PreId" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-12 ">
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-primary" type="submit">ثبت</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="col-md-12 col-lg-12 col-12 mt-3">
+        <div class="card shadow">
+            <h5 class="card-header">لیست پیش نیاز ها</h5>
+            <div class="card-body">
+                <div class="table table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    پیش نیاز
+                                </th>
+                                <th>
+                                    درس
+                                </th>
+                                <th>
+                                    عملیات
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PreSubjects)
+                            {
+                                <tr>
+                                    <td>@item.Pre</td>
+                                    <td>@item.Subject</td>
+                                    <td>
+                                        <a class="btn btn-outline-danger btn-sm" asp-page-handler="Delete" asp-route-id="@item.Id"
+                                       asp-route-subjectId="@item.SubjectId">
+                                            <i class="fa fa-remove"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

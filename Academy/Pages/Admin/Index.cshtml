@@ -1,0 +1,37 @@
+﻿@page
+
+@model Academy.Pages.Admin.IndexModel
+@{
+    Layout = "/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row justify-content-md-center admin-home">
+    <div class="col-lg-3 col-12 mb-3">
+        <div class="card shadow mouse-pointer" onclick="GoToUrl('/Admin/StudentGroups')">
+            <div class="card-body">
+                تعداد گروه ها : @ViewBag.Group
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-12 mb-3">
+        <div class="card shadow mouse-pointer" onclick="GoToUrl('/Admin/Subjects')">
+            <div class="card-body">
+               تعداد درس ها : @ViewBag.Subject
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-12 mb-3">
+        <div class="card shadow mouse-pointer" onclick="GoToUrl('/Admin/Teachers')">
+            <div class="card-body">
+                تعداد اساتید : @ViewBag.Teacher
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-12">
+        <div class="card shadow mouse-pointer" onclick="GoToUrl('/Admin/SubjectClasses')">
+            <div class="card-body">
+                تعداد کلاس ها : @ViewBag.Class
+            </div>
+        </div>
+    </div>
+</div>

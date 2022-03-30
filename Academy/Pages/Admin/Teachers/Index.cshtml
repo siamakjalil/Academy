@@ -1,0 +1,69 @@
+﻿@page
+@using Helper
+
+@model Academy.Pages.Admin.Teachers.IndexModel
+@{
+    ViewData["Title"] = "مدیریت اساتید";
+    Layout = "/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-12 col-lg-12 col-12 mt-3">
+        <div class="card shadow">
+            <h5 class="card-header">لیست اساتید</h5>
+            <div class="col-4 mt-3 me-3">
+                <a class="btn btn-outline-success" asp-page="/Admin/Teachers/Upsert"><i class="fa fa-plus"></i> ثبت استاد جدید</a>
+            </div>
+            <div class="card-body">
+                <div class="table table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TeachersList[0].FirstName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TeachersList[0].LastName)
+                            </th> 
+                            <th>
+                                عملیات
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.TeachersList)
+                        {
+                            <tr>
+                                <td>@item.FirstName</td>
+                                <td>@item.LastName</td>  
+                                <td>  
+                                    <a class="btn btn-outline-primary btn-sm" asp-page="/Admin/TeacherSubjects/Index" asp-route-id="@item.Id">
+                                        <i class="fa fa-list"></i>
+                                        لیست دروس
+                                    </a>
+                                    <a class="btn btn-outline-warning btn-sm" asp-page="/Admin/Teachers/Upsert" asp-route-id="@item.Id">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-sm" asp-route-id="@item.Id" asp-page-handler="Delete">
+                                        <i class="fa fa-remove"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 mt-3 text-center">
+                    <div page-model="@Model.PagingInfo"
+                         page-action="/Admin/Teachers"
+                         page-class="btn border"
+                         page-class-selected="btn btn-primary active"
+                         page-class-normal="btn btn-light"
+                         class="btn-group">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

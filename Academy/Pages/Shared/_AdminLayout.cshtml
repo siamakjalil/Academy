@@ -1,0 +1,59 @@
+﻿@using Academy.Classes
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/images/icon/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/icon/logo.png" type="image/x-icon">
+    <title>@ViewData["Title"]</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.rtl.min.css" rel="stylesheet" />
+    <link href="~/css/jquery-confirm.min.css" rel="stylesheet" />
+    <link href="~/css/jquery-confirm.rtl.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/fonts/fontiran.css" rel="stylesheet" />
+    <link href="~/css/persian-datepicker.min.css" rel="stylesheet" />
+    <link href="~/css/color.css" rel="stylesheet" />
+    <link href="~/css/select2.min.css" rel="stylesheet" />
+</head>
+<body dir="rtl" class="bg-light">
+
+    <partial name="_AdminMenu" />
+
+    <div class="container">
+        <partial name="_Modal" />
+        <partial name="_Loader" />
+        <main role="main" class="pb-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    @await RenderSectionAsync("BreadCrumb",required:false)
+                </ol>
+            </nav>
+            @RenderBody()
+
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container"> 
+        </div>
+    </footer>
+
+    <script src="~/js/jquery-3.6.0.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery-confirm.min.js"></script>
+    <script src="~/js/Helper.js"></script>
+    <script src="~/js/OnlyTypeNumber.js"></script>
+    <script src="https://kit.fontawesome.com/f02f2d5598.js" crossorigin="anonymous"></script>
+    <script src="~/js/persian-date.min.js"></script>
+    <script src="~/js/persian-datepicker.min.js"></script>
+    <script src="~/js/select2.full.min.js"></script>
+    <script src="~/ck/ckeditor.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/mhelli/teachers.js" asp-append-version="true"></script>
+    <script src="~/js/mhelli/base.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

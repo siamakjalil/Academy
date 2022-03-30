@@ -1,0 +1,86 @@
+﻿@page
+@using Academy.Classes
+
+@model Academy.Pages.Admin.TeacherSubjects.IndexModel
+@{
+    ViewData["Title"] = "مدیریت درس های اساتید ";
+    Layout = "/Pages/Shared/_AdminLayout.cshtml";
+}
+@section BreadCrumb{
+    <li class="breadcrumb-item"><a href="/Admin/Teachers">لیست اساتید </a></li>
+    <li class="breadcrumb-item active" aria-current="page">مدیریت درس های اساتید</li>
+    }
+<div class="row justify-content-md-center">
+    @if (ViewData["SubjectId"] != null)
+    {
+        <div class="col-md-12 col-lg-12 col-12">
+            <div class="card shadow">
+                <h5 class="card-header">افزودن درس های اساتید</h5>
+                <div class="card-body">
+                    <section class="card-text">
+                        <form id="account" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="TeacherSubject.TeacherId" />
+                            <div class="row mb-3">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <select asp-for="TeacherSubject.SubjectId" class="form-control form-select" asp-items="ViewBag.SubjectId">
+                                        <option selected disabled>انتخاب درس</option>
+                                    </select>
+                                    <span asp-validation-for="TeacherSubject.SubjectId" class="text-danger"></span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-12 ">
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-primary" type="submit">ثبت</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="col-md-12 col-lg-12 col-12 mt-3">
+        <div class="card shadow">
+            <h5 class="card-header">لیست درس های اساتید ها</h5>
+            <div class="card-body">
+                <div class="table table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    استاد
+                                </th>
+                                <th>
+                                    درس
+                                </th>
+                                <th>
+                                    عملیات
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.TeacherSubjects)
+                            {
+                                <tr>
+                                    <td>@item.Teacher.FullName</td>
+                                    <td>@item.Subject.Title</td>
+                                    <td>
+                                        <a class="btn btn-outline-danger btn-sm" asp-page-handler="Delete" asp-route-id="@item.Id"
+                                       asp-route-teacherId="@item.TeacherId">
+                                            <i class="fa fa-remove"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

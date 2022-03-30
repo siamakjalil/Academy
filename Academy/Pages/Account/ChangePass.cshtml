@@ -1,0 +1,57 @@
+﻿@page
+@using Helper
+@model Academy.Pages.Account.ChangePassModel
+@{
+    ViewData["Title"] = "تغییر کلمه عبور";
+    Layout = "/Pages/Shared/_AdminLayout.cshtml";
+}
+<div class="row justify-content-md-center gx-3">
+    <div class="col-md-12 col-lg-12 col-12">
+        <div class="card shadow">
+            <h5 class="card-header">فرم تغییر کلمه عبور</h5>
+            <div class="card-body">
+                <section class="card-text">
+                    <form id="account" method="post"> 
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-2">
+                                <label asp-for="CngPass.OldPass">کلمه عبور فعلی :</label>
+                                <input asp-for="CngPass.OldPass" class="form-control" autocomplete="off"
+                                       placeholder="کلمه عبور فعلی"/>
+                                <span asp-validation-for="CngPass.OldPass" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                @if (!string.IsNullOrEmpty(Model.SuccessMsg))
+                                {
+                                    <p class="alert alert-success mt-3">@Model.SuccessMsg</p>
+                                }
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-2">
+                                <label asp-for="CngPass.Pass">کلمه عبور جدید:</label>
+                                <input asp-for="CngPass.Pass" class="form-control" autocomplete="off"
+                                       placeholder="کلمه عبور جدید"/>
+                                <span asp-validation-for="CngPass.Pass" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label asp-for="CngPass.RePass">تکرار کلمه عبور جدید:</label>
+                                <input asp-for="CngPass.RePass" class="form-control" autocomplete="off"
+                                       placeholder="تکرار کلمه عبور جدید"/>
+                                <span asp-validation-for="CngPass.RePass" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 text-center">
+                            <div class="d-grid gap-2 mt-3 mb-3">
+                                <button class="btn btn-primary" id="submit-btn" type="submit">تغییر کلمه عبور</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

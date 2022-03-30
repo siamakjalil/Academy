@@ -1,0 +1,89 @@
+﻿@page
+@using DataLayer.Models
+@using Academy.Classes
+
+@model Academy.Pages.Admin.SubjectClasses.UpsertModel
+@{
+    ViewData["Title"] = "مدیریت کلاس ها";
+    Layout = "/Pages/Shared/_AdminLayout.cshtml";
+}
+@section BreadCrumb{
+    <li class="breadcrumb-item"><a href="/Admin/SubjectClasses">لیست کلاس ها</a></li>
+    <li class="breadcrumb-item active" aria-current="page">افزودن ، ویرایش کلاس</li>
+    }
+<div class="row justify-content-md-center">
+    <div class="col-md-12 col-lg-12 col-12">
+        <div class="card shadow">
+            <h5 class="card-header">افزودن کلاس</h5>
+            <div class="card-body">
+                <section class="card-text">
+                    <form id="account" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="SubjectClass.Id" />
+                        <input type="hidden" asp-for="SubjectClass.DateTime" />
+                        <input type="hidden" asp-for=" SubjectClass.TeacherId" />
+                        <span asp-validation-for="SubjectClass.Id" class="text-danger"></span>
+                        <div class="row mb-3">
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
+                                <label asp-for="SubjectClass.StudentGroupId">گروه : </label>
+                                <select asp-for="SubjectClass.StudentGroupId" class="form-control form-select" asp-items="ViewBag.StudentGroupId">
+                                    <option disabled selected>--انتخاب گروه--</option>
+                                </select>
+                                <span asp-validation-for="SubjectClass.StudentGroupId" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
+                                <label asp-for="SubjectClass.SubjectId">درس : </label>
+                                <select asp-for="SubjectClass.SubjectId" class="form-control form-select"
+                                        onchange="GetTeachers('SubjectClass_SubjectId')" asp-items="ViewBag.SubjectId">
+                                    <option disabled selected>--انتخاب درس--</option>
+                                </select>
+                                <span asp-validation-for="SubjectClass.SubjectId" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-12 mb-3" id="teacherList">
+                                @await Html.PartialAsync("/Pages/Admin/Teachers/_TeacherList.cshtml")
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
+                                <label asp-for="SubjectClass.Title">عنوان : </label>
+                                <input type="text" asp-for="SubjectClass.Title" class="form-control" autocomplete="off"
+                                       placeholder="عنوان" />
+                                <span asp-validation-for="SubjectClass.Title" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
+                                <label asp-for="SubjectClass.TimePerClass">زمان ثابت هر کلاس : </label>
+                                <input min="0" asp-for="SubjectClass.TimePerClass" class="form-control" autocomplete="off"
+                                       placeholder="زمان ثابت هر کلاس" />
+                                <span asp-validation-for="SubjectClass.TimePerClass" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
+                                <label asp-for="SubjectClass.TimePerWeek">چند ساعت در هفته : </label>
+                                <input min="0" asp-for="SubjectClass.TimePerWeek" class="form-control" autocomplete="off"
+                                       placeholder="چند ساعت در هفته" />
+                                <span asp-validation-for="SubjectClass.TimePerWeek" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-12 mb-3 mt-3 text-center">
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" type="submit">ثبت</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script>
+    $(document).ready(function () {
+        debugger;
+        var id = $("#SubjectClass_Id").val();
+        if(id === 0 || id === "0"){
+            GetTeachers('SubjectClass_SubjectId');
+        }
+    });
+</script>
+}

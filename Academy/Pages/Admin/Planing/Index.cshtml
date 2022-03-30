@@ -1,0 +1,73 @@
+﻿@page
+@model Academy.Pages.Admin.Planing.IndexModel
+@{
+    ViewData["Title"] = "زمان بندی کلاس ها";
+    Layout = "/Pages/Shared/_AdminLayout.cshtml";
+}
+<div class="row justify-content-md-center">
+    <div class="col-md-12 col-lg-12 col-12">
+        <div class="card shadow">
+            <h5 class="card-header">اطلاعات زمان بندی</h5>
+            <div class="card-body">
+                <section class="card-text">
+                    <form id="account" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div> 
+                        <div class="row mb-3"> 
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
+                                <label asp-for="Plan.StartDate">تاریخ شروع : </label>
+                                <input type="date" asp-for="Plan.StartDate" class="form-control" autocomplete="off"
+                                       placeholder="تاریخ شروع" />
+                                <span asp-validation-for="Plan.StartDate" class="text-danger"></span>
+                            </div> 
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
+                                <label asp-for="Plan.EndDate">تاریخ پایان : </label>
+                                <input type="date" asp-for="Plan.EndDate" class="form-control" autocomplete="off"
+                                       placeholder="تاریخ پایان" />
+                                <span asp-validation-for="Plan.EndDate" class="text-danger"></span>
+                            </div> 
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
+                                <label asp-for="Plan.StartTime">ساعت شروع : </label>
+                                <input type="time" asp-for="Plan.StartTime" class="form-control" autocomplete="off"
+                                       placeholder="ساعت شروع" />
+                                <span asp-validation-for="Plan.StartTime" class="text-danger"></span>
+                            </div> 
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
+                                <label asp-for="Plan.StartTime">ساعت پایان : </label>
+                                <input type="time" asp-for="Plan.EndTime" class="form-control" autocomplete="off"
+                                       placeholder="ساعت پایان" />
+                                <span asp-validation-for="Plan.EndTime" class="text-danger"></span>
+                            </div> 
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
+                                <label asp-for="Plan.NumberOfClass">تعداد کلاس ها : </label>
+                                <input min="1" asp-for="Plan.NumberOfClass" class="form-control" autocomplete="off"
+                                       placeholder="تعداد کلاس ها" />
+                                <span asp-validation-for="Plan.NumberOfClass" class="text-danger"></span>
+                            </div> 
+                            <div class="col-lg-6 col-md-6 col-12 mb-3">
+                                <label asp-for="Plan.RestTime">زمان استراحت کلاس ها : </label>
+                                <input min="0" asp-for="Plan.RestTime" class="form-control" autocomplete="off"
+                                       placeholder="زمان استراحت کلاس ها " />
+                                <span asp-validation-for="Plan.RestTime" class="text-danger"></span>
+                            </div> 
+                            <div class="col-lg-12 col-md-12 col-12 mb-3">
+                                <label asp-for="SubjectClassId"> کلاس ها : </label>
+                                <select asp-for="SubjectClassId" class="form-control class-type-teacher form-select" asp-items="ViewBag.SubjectClassId" multiple="multiple"> 
+                                </select>
+                                <span asp-validation-for="SubjectClassId" class="text-danger"></span>
+                            </div> 
+                            <div class="col-lg-12 col-md-12 col-12 mb-3 mt-3 text-center">
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" type="submit">ثبت</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

@@ -15,15 +15,13 @@
                         <div class="row mb-3"> 
                             <div class="col-lg-6 col-md-6 col-12 mb-3">
                                 <label asp-for="Plan.StartDate">تاریخ شروع : </label>
-                                <input type="date" asp-for="Plan.StartDate" class="form-control" autocomplete="off"
-                                       placeholder="تاریخ شروع" />
-                                <span asp-validation-for="Plan.StartDate" class="text-danger"></span>
+                                <input autocomplete="off" class="form-control date-input" type="text" asp-for="StartDate" value="" placeholder=" تاریخ شروع">
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
                             </div> 
                             <div class="col-lg-6 col-md-6 col-12 mb-3">
                                 <label asp-for="Plan.EndDate">تاریخ پایان : </label>
-                                <input type="date" asp-for="Plan.EndDate" class="form-control" autocomplete="off"
-                                       placeholder="تاریخ پایان" />
-                                <span asp-validation-for="Plan.EndDate" class="text-danger"></span>
+                                <input autocomplete="off" class="form-control date-input" type="text" asp-for="EndDate" value="" placeholder=" تاریخ پایان">
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
                             </div> 
                             <div class="col-lg-6 col-md-6 col-12 mb-3">
                                 <label asp-for="Plan.StartTime">ساعت شروع : </label>

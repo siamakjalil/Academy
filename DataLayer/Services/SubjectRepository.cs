@@ -29,12 +29,12 @@ namespace DataLayer.Services
             if (where == null)
             {
                 return await _db.Subjects.OrderByDescending(u => u.Id)
-                    .Skip(skip).Take(take).ToListAsync();
+                    .ToListAsync();
             }
             else
             {
                 return await _db.Subjects.Where(where)
-                    .Skip(skip).Take(take).ToListAsync();
+                    .ToListAsync();
             }
         }
         public async Task<int> GetCount(Expression<Func<Subject, bool>> where = null)

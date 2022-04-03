@@ -34,6 +34,10 @@ namespace Academy.Pages.Admin.SubjectClasses
         public SubjectClass SubjectClass { get; set; }
         [BindProperty]
         public int teacherId { get; set; }
+        [BindProperty]
+        public int TimePerClass { get; set; }
+        [BindProperty]
+        public int TimePerWeek { get; set; }
 
         public async Task<IActionResult> OnGet(int id = 0)
         {
@@ -50,6 +54,9 @@ namespace Academy.Pages.Admin.SubjectClasses
             { 
                 var model = await _teacherSubjects.GetAll(u => u.SubjectId == SubjectClass.SubjectId);
                 ViewData["TeacherId"] = new SelectList(model.Select(u => u.Teacher), "Id", "FullName", SubjectClass.TeacherId);
+
+                TimePerClass = SubjectClass.TimePerClass.Hours;
+                TimePerWeek = SubjectClass.TimePerWeek.Hours;
             }
         }
 
@@ -57,12 +64,21 @@ namespace Academy.Pages.Admin.SubjectClasses
         {
             try
             {
+
+                if(TimePerClass > 23 || TimePerWeek > 23)
+                {
+
+                    ModelState.AddModelError("SubjectClass.Id", "بیشترین مقدار مجاز تعداد ساعات 23 است.");
+                }
+
                 ModelState.Remove("SubjectClass.StudentGroup");
                 ModelState.Remove("SubjectClass.Subject");
                 ModelState.Remove("SubjectClass.DateTime");
                 ModelState.Remove("SubjectClass.Teacher");
                 ModelState.Remove("SubjectClass.TeacherId");
                 ModelState.Remove("SubjectClass.PlanDetails");
+                ModelState.Remove("SubjectClass.TimePerWeek");
+                ModelState.Remove("SubjectClass.TimePerClass");
 
                 var flag = true;
                 if (SubjectClass.Id == 0 && teacherId == 0 )
@@ -73,6 +89,10 @@ namespace Academy.Pages.Admin.SubjectClasses
                 if (ModelState.IsValid && flag)
                 {
                     SubjectClass.TeacherId = teacherId;
+
+                    SubjectClass.TimePerClass = new TimeSpan(TimePerClass, 0, 0);
+                    SubjectClass.TimePerWeek = new TimeSpan(TimePerWeek, 0, 0);
+
                     await _appClass.Upsert(SubjectClass);
                     return Redirect("/Admin/SubjectClasses");
                 }

@@ -29,10 +29,10 @@ namespace DataLayer.Services
             if (where == null)
             {
                 return await _db.Admins
-                    .OrderByDescending(u => u.Id).Skip(skip).Take(take).ToListAsync();
+                    .OrderByDescending(u => u.Id).ToListAsync();
             }
             return await _db.Admins
-                .Where(where).OrderByDescending(u => u.Id).Skip(skip).Take(take).ToListAsync();
+                .Where(where).OrderByDescending(u => u.Id).ToListAsync();
         }
 
         public async Task<int> GetCount(Expression<Func<Admin, bool>> @where = null)

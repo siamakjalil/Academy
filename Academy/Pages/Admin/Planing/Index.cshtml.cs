@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using Helper;
 
 namespace Academy.Pages.Admin.Planing
 {
@@ -24,6 +25,14 @@ namespace Academy.Pages.Admin.Planing
         [BindProperty]
         [Required(ErrorMessage = "لطفا کلاس ها را مشخص کنید")]
         public List<int> SubjectClassId { get; set; }
+
+        [BindProperty]
+        [Required(ErrorMessage = "لطفا تاریخ شروع را مشخص کنید")]
+        public string StartDate{ get; set; }
+        [BindProperty]
+        [Required(ErrorMessage = "لطفا تاریخ پایان را مشخص کنید")]
+        public string EndDate{ get; set; }
+
         public async Task<IActionResult> OnGet()
         {
             ViewData["SubjectClassId"] = new SelectList(await _subjectClass.GetAll(), "Id", "Title");
@@ -32,8 +41,12 @@ namespace Academy.Pages.Admin.Planing
         public async Task<IActionResult> OnPostAsync()
         {
             ModelState.Remove("Plan.PlanDetails");
+            ModelState.Remove("Plan.StartDate");
+            ModelState.Remove("Plan.EndDate");
             if (ModelState.IsValid)
             {
+                Plan.StartDate = StartDate.ShamsiToMiladi()??DateTime.Now;
+                Plan.EndDate = EndDate.ShamsiToMiladi()??DateTime.Now;
                 await _plan.Add(Plan);
                 return Redirect("/Admin/Planing");
             }

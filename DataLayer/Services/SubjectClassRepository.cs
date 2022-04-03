@@ -30,12 +30,12 @@ namespace DataLayer.Services
             if (where == null)
             {
                 return await _db.SubjectClasses.Include(u=>u.StudentGroup).Include(u=>u.Subject).Include(u=>u.Teacher)
-                    .OrderByDescending(u => u.DateTime).Skip(skip).Take(take).ToListAsync();
+                    .OrderByDescending(u => u.DateTime).ToListAsync();
             }
             else
             {
                 return await _db.SubjectClasses.Where(where).Include(u => u.StudentGroup).Include(u => u.Subject)
-                    .Include(u => u.Teacher).OrderByDescending(u => u.DateTime).Skip(skip).Take(take).ToListAsync();
+                    .Include(u => u.Teacher).OrderByDescending(u => u.DateTime).ToListAsync();
             }
         }
 

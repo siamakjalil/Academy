@@ -45,7 +45,8 @@ namespace Academy.Pages.Admin.SubjectClasses
 
         private async Task<List<SubjectClass>> Filter(int pageId, int take)
         {
-            return await _subjectClass.GetAll(null, Utility.SkipNo(pageId, take), take);
+            var model =  await _subjectClass.GetAll(null, Utility.SkipNo(pageId, take), take);
+            return model.OrderBy(u => u.StudentGroupId).ToList();
         }
 
 

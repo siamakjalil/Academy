@@ -47,13 +47,13 @@ namespace Academy.Pages.Admin.SubjectClasses
 
         private async Task SetData(int id)
         {
-            ViewData["StudentGroupId"] = new SelectList(await _studentGroup.GetAll(), "Id", "Title");
-            ViewData["SubjectId"] = new SelectList(await _subject.GetAll(), "Id", "Title");
+            ViewData["StudentGroupId"] = new SelectList((await _studentGroup.GetAll()).OrderBy(u=>u.Title), "Id", "Title");
+            ViewData["SubjectId"] = new SelectList((await _subject.GetAll()).OrderBy(u => u.Title), "Id", "Title");
             SubjectClass = id != 0 ? await _appClass.GetById(id) : new SubjectClass();
             if (id != 0)
             { 
                 var model = await _teacherSubjects.GetAll(u => u.SubjectId == SubjectClass.SubjectId);
-                ViewData["TeacherId"] = new SelectList(model.Select(u => u.Teacher), "Id", "FullName", SubjectClass.TeacherId);
+                ViewData["TeacherId"] = new SelectList(model.Select(u => u.Teacher).OrderBy(u=>u.FullName), "Id", "FullName", SubjectClass.TeacherId);
 
                 TimePerClass = SubjectClass.TimePerClass.Hours;
                 TimePerWeek = SubjectClass.TimePerWeek.Hours;

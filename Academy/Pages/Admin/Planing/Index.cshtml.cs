@@ -35,7 +35,7 @@ namespace Academy.Pages.Admin.Planing
 
         public async Task<IActionResult> OnGet()
         {
-            ViewData["SubjectClassId"] = new SelectList(await _subjectClass.GetAll(), "Id", "Title");
+            ViewData["SubjectClassId"] = new SelectList((await _subjectClass.GetAll()).OrderBy(u=>u.Title), "Id", "Title");
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()

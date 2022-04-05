@@ -15,7 +15,7 @@ namespace Academy.Controllers
         public async Task<IActionResult> GetTeachers(int subjectId)
         {
             var model =await _teacherSubjects.GetAll(u => u.SubjectId == subjectId);
-            ViewData["TeacherId"] = new SelectList(model.Select(u=>u.Teacher), "Id", "FullName");
+            ViewData["TeacherId"] = new SelectList(model.Select(u=>u.Teacher).OrderBy(u=>u.FullName), "Id", "FullName");
             return PartialView("/Pages/Admin/Teachers/_TeacherList.cshtml", model);
         }
     }

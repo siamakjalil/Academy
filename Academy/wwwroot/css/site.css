@@ -150,7 +150,7 @@ main {
 }
 
 .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple {
-    height: 38px !important;
+    /*height: 38px !important;*/
     border: 1px solid #ced4da !important;
 }
  
